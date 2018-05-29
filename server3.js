@@ -5,39 +5,42 @@ const word = 'président';  // coulld any word but (spoiler alert!) "président"
 const maxCalls = 100;
 var bool = false;
 var nb = 0;
+var count =0;
 
-loop: do{
+//do{
+//boucle arret si boucle infini et arret si boolean = true
+while(nb<maxCalls || count == 1){
+  //va sur URL
 request(randomPageUrl, function (error, response, body) {
   if (!error) {
     var cheerioPage = cheerio.load(body)
 
+    //chargement du html
     var title = cheerioPage('title').text();
     var content = cheerioPage('p').text();
+
+    //parser en string propre
     var arrayOfStrings = content.split(/[.,\/ -]/);
+    var url = title.replace(/— Wikipédia/i, '');
 
+    //boucle de recherche du mot dans le string propre
     for (var i=0; i < arrayOfStrings.length; i++){
+      //si le mot alors log
       if(arrayOfStrings[i] == word){
-
-        //var url = ('URL: https://fr.wikipedia.org/wiki/' + url)
-        //title.remove(" — Wikipédia");
         bool = true;
-        console.log('Le mot : "' + word + '" a été trouvé dans la page :');
-        console.log('URL: https://fr.wikipedia.org/wiki/' + title);
+        count =1;
+        console.log('the word : "' + word + '" is in the page :');
+        console.log('URL: https://fr.wikipedia.org/wiki/' + url);
         console.log('Title: ' + title);
         console.log('-------------------------');
         break;
-        return;
       }
-      //break loop;
-}
-
+    }
   }else {
     console.log("We’ve encountered an error: " + error);
   }
 });
-if (nb==6) {
-  console.log('while break');
-  break loop
-}
+console.log(count);
 nb++;
-}while(nb<maxCalls & bool != true);
+}
+//while(bool != true && nb<maxCalls);
