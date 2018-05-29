@@ -3,7 +3,7 @@ var cheerio = require('cheerio');
 const randomPageUrl = 'https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Page_au_hasard';  // url for random wikipedia page
 const word = 'président';  // coulld any word but (spoiler alert!) "président" appears pretty often.
 const maxCalls = 100;
-var bool = false;
+//var bool = false;
 var nb = 0;
 var count =0;
 
@@ -27,20 +27,21 @@ request(randomPageUrl, function (error, response, body) {
     for (var i=0; i < arrayOfStrings.length; i++){
       //si le mot alors log
       if(arrayOfStrings[i] == word){
-        bool = true;
+        //bool = true;
         count =1;
-        console.log('the word : "' + word + '" is in the page :');
-        console.log('URL: https://fr.wikipedia.org/wiki/' + url);
-        console.log('Title: ' + title);
-        console.log('-------------------------');
+        console.log('--------WIKIPEDIA SCRAPE--------');
+        console.log('The word : "' + word + '" is in the page :');
+        console.log('URL : https://fr.wikipedia.org/wiki/' + url);
+        console.log('Title : ' + title);
+        console.log('--------------------------------');
         break;
       }
+      if(count == 1){break};
     }
   }else {
-    console.log("We’ve encountered an error: " + error);
+    console.log("Error: " + error);
   }
 });
-console.log(count);
 nb++;
+
 }
-//while(bool != true && nb<maxCalls);
